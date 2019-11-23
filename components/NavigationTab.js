@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         alignSelf: "center",
         color: 'green',
-        fontSize: 30
+        fontSize: 40
     }
 });
 
