@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Alert, View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import Post from './Post'
+import Network from '../../../../helpers/Network';
+import { isLogicalExpression } from '@babel/types';
 
 const styles = StyleSheet.create({
     mainMenuContainer: {
@@ -10,11 +12,31 @@ const styles = StyleSheet.create({
 });
 
 const HomeScreen = () => {
+    const [ posts, setPosts ] = useState([])
+    const [ loading, setLoading ] = useState(true)
+
+    if (loading && posts.length === 0) {
+        setLoading(false)
+        Network.getAdListings()
+        .then(resp => {
+            setPosts(resp.ads)
+        })
+        .catch(err => {
+            console.log(err)
+            Alert.alert(`Error`, err.statusText || err.toString())
+        })
+    }
+
     return (
         <>
             <View style={styles.mainMenuContainer}>
                 <ScrollView>
-                    <Post></Post>
+                    {loading
+                        ? <ActivityIndicator size="large" style={{ marginTop: 50 }}/>
+                        : posts.map((v, k) => {
+                            return <Post postData={v} key={k} />
+                        })
+                    }
                 </ScrollView>
             </View>
         </>
