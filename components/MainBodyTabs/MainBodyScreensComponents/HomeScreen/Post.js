@@ -20,15 +20,15 @@ const styles = EStyleSheet.create({
     }
 });
 
-const Post = () => (
+const Post = ({ postData }) => (
     <Card>
         <Card.Title style={styles.titleSection}
-            title='Terrible burger' style={styles.title}
+            title={ postData.title || 'Untitled Listing' } style={styles.title}
             left={(props) => (<Avatar.Icon style={styles.icon} icon="folder" />)}
         />
         <Card.Content>
-            <Title>Terrible burger</Title>
-            <Paragraph>I feel very ill, might yak rn</Paragraph>
+            <Title>{ (postData.type || 'requesting').toUpperCase()} : { postData.title || 'Untitled Listing' }</Title>
+            <Paragraph>{ postData.description || 'No additional information given...' }</Paragraph>
         </Card.Content>
         <Card.Actions>
             <Button>Message</Button>

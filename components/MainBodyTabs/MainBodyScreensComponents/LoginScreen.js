@@ -6,6 +6,8 @@ import config from '../../../config/app'
 
 import UiStyles from '../../Styles/ui'
 
+import Network from '../../../helpers/Network'
+
 const LoginScreen = ({ callback, switchScreens }) => {
     const [ email, setEmail ] = useState('abc@abc.com')
     const [ password, setPassword ] = useState('123')
@@ -18,6 +20,8 @@ const LoginScreen = ({ callback, switchScreens }) => {
             if (data.error) {
                 throw new Error('Invalid login request, please try again')
             }
+            console.log(data)
+            Network.token = data.token
             callback()
         })
         .catch(err => {
@@ -25,6 +29,8 @@ const LoginScreen = ({ callback, switchScreens }) => {
             Alert.alert('Error', err.statusText || err.toString())
         })
     }
+
+    sendRequest()
 
     return (
         <View style={{ flex: 1, backgroundColor: '#1a78cf' }}>
