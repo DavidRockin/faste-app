@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Button } from 'react-native-paper';
 
 import ButtonComponent from './ButtonComponent';
 import TextInputTemplateComponent from "./TextInputTemplateComponent";
@@ -37,12 +38,16 @@ const TemplateScreen = () => {
         if (selectedFormType === "offer") {
             return (
                 <>
-                    <View style={{ flexDirection: "row", flex: 4, backgroundColor: '#f00' }}>
+                    <View style={{ flexDirection: "row", flex: 5 }}>
                         <View style={{ flex: 3 }}>
                             <TextInputTemplateComponent style={{ width: '80%' }} textInputCaption={"Food name"} textInputBody={templateFoodTitle} onChangeHandler={handleFoodTitleChange} />
                         </View>
-                        <View style={{ flex: 2 }}>
+                        <View style={{ flex: 1 }}>
                             <TextInputTemplateComponent style={{ width: '80%' }} textInputCaption={"#"} textInputBody={templateFoodTitle} onChangeHandler={handleNumberOfFood} />
+                        </View>
+                        <View style={{ flex: 1, alignSelf: "center", alignContent: "center" }}>
+                            <Button contentStyle={{height: 50}} icon="close" style={{textAlign: "center", borderRadius: 100, width: 30 }} mode="outlined" onPress={() => console.log('Pressed')}>
+                            </Button>
                         </View>
                     </View>
                     <TextInputTemplateComponent textInputCaption={"Description"} textInputBody={templateDescription} onChangeHandler={handleTemplateDescription} />
