@@ -12,15 +12,21 @@ const RegisterScreen = ({ callback, switchScreens }) => {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
+    const [ working, setWorking ] = useState(false)
+
     function sendRequest() {
         axios.post(config.endpoint + `/api/register`, {
             email, password, name
         })
         .then(({ data }) => {
-            console.log(data)
+            if (data.error) {
+                throw new Error(data.error)
+            }
+            switchScreens()
+            Alert.alert('Success', 'Registration success, go get em')
         })
         .catch(err => {
-            console.log(err)
+            Alert.alert('Error', err.statusText || err.toString())
         })
     }
 
