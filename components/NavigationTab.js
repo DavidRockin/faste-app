@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         justifyContent: "center",
         alignContent: "center",
-        backgroundColor: 'powderblue'
+        backgroundColor: '#61B9F9'
     },
     navbarCaption: {
         textAlign: "center",
