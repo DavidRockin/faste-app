@@ -7,13 +7,13 @@ import ButtomMenuContainer from './BottomMenu';
 
 const MainAppContainer = () => {
 
-  const [caption, setCaption] = useState("Hello world");
+  const [caption, setCaption] = useState("FASTE");
 
   return (
     <View style={{ flex: 6 }}>
       <NavigationTab caption={caption} />
       <View style={{flex: 5}}>
-        <ButtomMenuContainer />
+        <ButtomMenuContainer caption={caption}/>
       </View>
     </View>
   );

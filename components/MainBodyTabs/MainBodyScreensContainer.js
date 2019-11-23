@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-import HomeScreen from './MainBodyScreensComponents/HomeScreen';
+import HomeScreen from './MainBodyScreensComponents/HomeScreen/HomeScreen';
 
 const styles = StyleSheet.create({
     container: {
