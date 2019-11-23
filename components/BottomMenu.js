@@ -59,7 +59,7 @@ const BottomMenuNavigator = createMaterialBottomTabNavigator({
     }
 },
     {
-        barStyle: { backgroundColor: "#61B9F9" },
+        barStyle: { backgroundColor: "#1a78cf" },
         initialRouteName: "Home",
         order: ["Home", "Explore", "Template", "Messages", "Settings"]
     });

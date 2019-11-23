@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { TextInput } from 'react-native-paper';
+import ButtonComponent from './ButtonComponent';
 
 const TemplateScreen = () => {
 
@@ -10,15 +12,37 @@ const TemplateScreen = () => {
     }
 
     return (
-        <View style={{ flex: 1, alignContent: 'center'}}>
-            <Text>lol Screen!</Text>
+        <View style={{ flex: 1, alignContent: 'center' }}>
             <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            onChangeText={(event) => handleFoodTitleChange(event)}
-            value={foodTitle}
-            placeholderTextColor="black"
-            placeholder="Offering"
+                label='Food Title'
+                mode={"outlined"}
+                onChangeText={(event) => handleFoodTitleChange(event)}
+                value={foodTitle}
             />
+            <TextInput
+                label='Food Title'
+                mode={"outlined"}
+                onChangeText={(event) => handleFoodTitleChange(event)}
+                value={foodTitle}
+            />
+            <TextInput
+                label='Address'
+                mode={"outlined"}
+                onChangeText={(event) => handleFoodTitleChange(event)}
+                value={foodTitle}
+            />
+            <TextInput style={{height: 200}}
+                textAlignVertical="top"
+                multiline={true}
+                label='Short Description'
+                numberOfLines={4}
+                mode={"outlined"}
+                onChangeText={(event) => handleFoodTitleChange(event)}
+                value={foodTitle}
+            />
+
+            <ButtonComponent />
+
         </View>
     );
 }

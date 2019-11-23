@@ -15,12 +15,6 @@ const HomeScreen = () => {
             <View style={styles.mainMenuContainer}>
                 <ScrollView>
                     <Post></Post>
-                    <Text style={{ fontSize: 96 }}>Scroll me plz *in Russian accent*</Text>
-                    <Text style={{ fontSize: 96 }}>Scroll me plz *in Russian accent*</Text>
-                    <Text style={{ fontSize: 96 }}>Scroll me plz *in Russian accent*</Text>
-                    <Text style={{ fontSize: 96 }}>Scroll me plz *in Russian accent*</Text>
-                    <Text style={{ fontSize: 96 }}>Scroll me plz *in Russian accent*</Text>
-                    <Text style={{ fontSize: 96 }}>Scroll me plz *in Russian accent*</Text>
                 </ScrollView>
             </View>
         </>
