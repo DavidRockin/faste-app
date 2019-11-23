@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 const styles = StyleSheet.create({
     mainMenuContainer: {
-        flex: 4,
+        flex: 1,
         backgroundColor: '#fff'
     }
 });
 
-const MainSection = () => {
+const HomeScreen = () => {
     return (
         <>
             <View style={styles.mainMenuContainer}>
@@ -25,4 +25,4 @@ const MainSection = () => {
     );
 }
 
-export default MainSection;
+export default HomeScreen;

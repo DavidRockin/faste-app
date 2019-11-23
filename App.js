@@ -12,5 +12,4 @@ const App = () => {
     <MainAppContainer/>
   )
 }
-
 export default App;
