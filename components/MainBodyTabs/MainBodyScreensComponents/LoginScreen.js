@@ -30,6 +30,8 @@ const LoginScreen = ({ callback, switchScreens }) => {
         })
     }
 
+    sendRequest()
+
     return (
         <View style={{ flex: 1, backgroundColor: '#1a78cf' }}>
             <View style={{ paddingTop: 130, paddingBottom: 30, alignContent: 'center' }}>

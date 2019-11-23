@@ -15,7 +15,6 @@ const MainAppContainer = () => {
   const [ isLogin, setLogin ] = useState(true)
 
   function test() {
-    Alert.alert('aaaaaa', 'eeee')
     setAuth(true)
   }
   
