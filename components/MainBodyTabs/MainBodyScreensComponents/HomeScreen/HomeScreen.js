@@ -34,7 +34,7 @@ const HomeScreen = () => {
                     {loading
                         ? <ActivityIndicator size="large" style={{ marginTop: 50 }}/>
                         : posts.map((v, k) => {
-                            return <Post data={v} key={k} />
+                            return <Post postData={v} key={k} />
                         })
                     }
                 </ScrollView>
