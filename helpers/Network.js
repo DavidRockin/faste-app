@@ -24,6 +24,18 @@ class Network {
         })
     }
 
+    static getAdListings() {
+        return axios.get(config.endpoint + `/api/ads`, {
+            headers: { 
+                ...Network.getHeaders()
+            }
+        })
+        .then(({ data }) => {
+            if (data.error) throw new Error(data.error)
+            return data
+        })
+    }
+
     static async getUserId() {
         if (Network.userData !== null) {
             return Network.userData._id
