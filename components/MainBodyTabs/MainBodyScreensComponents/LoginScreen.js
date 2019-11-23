@@ -7,8 +7,8 @@ import config from '../../../config/app'
 import UiStyles from '../../Styles/ui'
 
 const LoginScreen = ({ callback, switchScreens }) => {
-    const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('')
+    const [ email, setEmail ] = useState('abc@abc.com')
+    const [ password, setPassword ] = useState('123')
 
     function sendRequest() {
         axios.post(config.endpoint + `/api/login`, {
