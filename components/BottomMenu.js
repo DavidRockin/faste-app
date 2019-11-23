@@ -6,7 +6,7 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 
 import HomeScreen from './MainBodyTabs/MainBodyScreensComponents/HomeScreen/HomeScreen';
 import SettingsScreen from './MainBodyTabs/MainBodyScreensComponents/SettingsScreen';
-import MessagesScreen from './MainBodyTabs/MainBodyScreensComponents/MessagesScreen';
+import MessagesScreen from './MainBodyTabs/MainBodyScreensComponents/MessagesScreen/MessagesScreen';
 import ExploreScreen from './MainBodyTabs/MainBodyScreensComponents/ExploreScreen';
 import TemplateScreen from './MainBodyTabs/MainBodyScreensComponents/TemplateScreen';
 

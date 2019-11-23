@@ -11,13 +11,11 @@ const styles = StyleSheet.create({
 
 const HomeScreen = () => {
     return (
-        <>
-            <View style={styles.mainMenuContainer}>
-                <ScrollView>
-                    <Post></Post>
-                </ScrollView>
-            </View>
-        </>
+        <View style={styles.mainMenuContainer}>
+            <ScrollView>
+                <Post></Post>
+            </ScrollView>
+        </View>
     );
 }
 
