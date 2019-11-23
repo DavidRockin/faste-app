@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "expo": "^35.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -19,11 +20,11 @@
     "react-native-unimodules": "0.6.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.7",
-    "viewmanager": "0.0.1",
     "react-navigation": "^4.0.10",
     "react-navigation-material-bottom-tabs": "^2.1.5",
     "react-navigation-stack": "^1.10.3",
     "redux": "^4.0.4",
+    "viewmanager": "0.0.1",
     "watchman": "^1.0.0"
   },
   "devDependencies": {
