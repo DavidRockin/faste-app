@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     navbarCaption: {
         textAlign: "center",
         alignSelf: "center",
-        color: 'green',
+        color: 'white',
         fontSize: 40
     }
 });

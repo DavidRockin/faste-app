@@ -1,49 +1,82 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { View, Keyboard, TouchableWithoutFeedback } from 'react-native';
+
 import ButtonComponent from './ButtonComponent';
+import TextInputTemplateComponent from "./TextInputTemplateComponent";
+import InputSelector from './InputSelector';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const TemplateScreen = () => {
+    const [templateFoodTitle, setTemplateFoodTitle] = useState("");
+    const [templateDescription, setTemplateDescription] = useState("");
+    const [numberOfFood, setNumberOfFood] = useState("");
+    const [formType, setFormType] = useState("selectType");
 
-    const [foodTitle, setFoodTitle] = useState("");
+    const [pickerValue, setPickerValue] = useState("");
 
     const handleFoodTitleChange = (e) => {
-        setFoodTitle(e.value);
+        setTemplateFoodTitle(e.value);
+    }
+
+    const handleTemplateDescription = (e) => {
+        setTemplateDescription(e.value);
+    }
+
+    const handleNumberOfFood = (e) => {
+        setNumberOfFood(e.value);
+    }
+
+    const handleSelectionChange = (selected) => {
+        if (selected) {
+            console.log(selected);
+            setPickerValue(selected);
+        }
+    }
+
+    const fullForm = (selectedFormType) => {
+        if (selectedFormType === "offer") {
+            return (
+                <>
+                    <View style={{ flexDirection: "row", flex: 4, backgroundColor: '#f00' }}>
+                        <View style={{ flex: 3 }}>
+                            <TextInputTemplateComponent style={{ width: '80%' }} textInputCaption={"Food name"} textInputBody={templateFoodTitle} onChangeHandler={handleFoodTitleChange} />
+                        </View>
+                        <View style={{ flex: 2 }}>
+                            <TextInputTemplateComponent style={{ width: '80%' }} textInputCaption={"#"} textInputBody={templateFoodTitle} onChangeHandler={handleNumberOfFood} />
+                        </View>
+                    </View>
+                    <TextInputTemplateComponent textInputCaption={"Description"} textInputBody={templateDescription} onChangeHandler={handleTemplateDescription} />
+                    <ButtonComponent />
+                </>
+            );
+        }
+        else
+            return (
+                <>
+                    <TextInputTemplateComponent textInputCaption={"Food name"} textInputBody={templateFoodTitle} onChangeHandler={handleFoodTitleChange} />
+                    <TextInputTemplateComponent textInputCaption={"Description"} textInputBody={templateDescription} onChangeHandler={handleTemplateDescription} />
+                    <ButtonComponent />
+                </>
+            );
+    }
+
+    const emptyForm = () => {
+        return (
+            <>
+
+            </>
+        );
     }
 
     return (
-        <View style={{ flex: 1, alignContent: 'center' }}>
-            <TextInput
-                label='Food Title'
-                mode={"outlined"}
-                onChangeText={(event) => handleFoodTitleChange(event)}
-                value={foodTitle}
-            />
-            <TextInput
-                label='Food Title'
-                mode={"outlined"}
-                onChangeText={(event) => handleFoodTitleChange(event)}
-                value={foodTitle}
-            />
-            <TextInput
-                label='Address'
-                mode={"outlined"}
-                onChangeText={(event) => handleFoodTitleChange(event)}
-                value={foodTitle}
-            />
-            <TextInput style={{height: 200}}
-                textAlignVertical="top"
-                multiline={true}
-                label='Short Description'
-                numberOfLines={4}
-                mode={"outlined"}
-                onChangeText={(event) => handleFoodTitleChange(event)}
-                value={foodTitle}
-            />
-
-            <ButtonComponent />
-
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <ScrollView scrollEnabled={pickerValue ? true : false}>
+                <View style={{ flex: 1, alignContent: 'center' }}>
+                    <InputSelector pickerValue={pickerValue} handler={handleSelectionChange} />
+                    {pickerValue ? fullForm(pickerValue) : emptyForm()}
+                </View>
+            </ScrollView>
+        </TouchableWithoutFeedback>
     );
 }
 
