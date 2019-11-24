@@ -5,6 +5,7 @@ import Network from '../../../helpers/Network'
 import { TextInput, Button } from 'react-native-paper';
 
 import UiStyles from '../../Styles/ui'
+import { ScrollView } from 'react-native-gesture-handler';
 
 const SettingsScreen = () => {
     const [ userData, setUserData ] = useState(null)
@@ -45,36 +46,38 @@ const SettingsScreen = () => {
     }, [])
 
     return (
-        <View style={{ flex: 4, padding: 20, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ flex: 7, width: '100%' }}>
-                <View style={{ flex: 1, width: '100%' }}>
-                    <Text style={{ fontSize: 18, padding: 8 }}>📧 Your email</Text>
-                    <TextInput value={email} onChangeText={setEmail} />
+        <ScrollView style={{ flex: 1 }}>
+            <View style={{ flex: 4, padding: 20, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 7, width: '100%' }}>
+                    <View style={{ flex: 1, width: '100%' }}>
+                        <Text style={{ fontSize: 18, padding: 8 }}>📧 Your email</Text>
+                        <TextInput value={email} onChangeText={setEmail} />
+                    </View>
+                    <View style={{ flex: 1, width: '100%' }}>
+                        <Text style={{ fontSize: 18, padding: 8 }}>👤 Your Name</Text>
+                        <TextInput value={name} onChangeText={setName} />
+                    </View>
+                    <View style={{ flex: 1, width: '100%' }}>
+                        <Text style={{ fontSize: 18, padding: 8 }}>🔒 Password</Text>
+                        <TextInput secureTextEntry={true} value={password} onChangeText={setPassword} />
+                    </View>
+                    <View style={{ flex: 1, width: '100%' }}>
+                        <Text style={{ fontSize: 18, padding: 8 }}>📞 Your Phone Number</Text>
+                        <TextInput value={telephone} onChangeText={setTelephone} />
+                    </View>
+                    <View style={{ flex: 1, width: '100%', paddingTop: 20}}>
+                        <Button onPress={saveChanges} style={UiStyles.uiButton} color='#fff'>
+                            <Text>Save Changes</Text>
+                        </Button>
+                    </View>
                 </View>
-                <View style={{ flex: 1, width: '100%' }}>
-                    <Text style={{ fontSize: 18, padding: 8 }}>👤 Your Name</Text>
-                    <TextInput value={name} onChangeText={setName} />
-                </View>
-                <View style={{ flex: 1, width: '100%' }}>
-                    <Text style={{ fontSize: 18, padding: 8 }}>🔒 Password</Text>
-                    <TextInput secureTextEntry={true} value={password} onChangeText={setPassword} />
-                </View>
-                <View style={{ flex: 1, width: '100%' }}>
-                    <Text style={{ fontSize: 18, padding: 8 }}>📞 Your Phone Number</Text>
-                    <TextInput value={telephone} onChangeText={setTelephone} />
-                </View>
-                <View style={{ flex: 1, width: '100%', paddingTop: 20}}>
-                    <Button onPress={saveChanges} style={UiStyles.uiButton} color='#fff'>
-                        <Text>Save Changes</Text>
+                <View style={{ flex: 1, height: 90 }}>
+                    <Button onPress={Network.signout}>
+                        <Text>Sign Out</Text>
                     </Button>
                 </View>
-            </View>
-            <View style={{ flex: 1, height: 90 }}>
-                <Button onPress={Network.signout}>
-                    <Text>Sign Out</Text>
-                </Button>
-            </View>
-        </View>
+         </View>
+        </ScrollView>
     );
 }
 
