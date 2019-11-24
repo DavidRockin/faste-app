@@ -3,29 +3,41 @@ import { View, Text, StyleSheet, ScrollView, TouchableHighlight } from 'react-na
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import moment from 'moment'
 
+import getDistance from 'geolib/es/getDistance'
+import store from '../../../../helpers/store';
+
 const Post = ({ postData }) => {
     
     const calculatePostedAgo = (dateCreated) => {
         const dateRightNow = Date.now();
         const datePosted = new Date(dateCreated);
-        return 'Posted: '+ moment.duration(dateRightNow-datePosted).humanize() + ' ago';
+        return moment.duration(dateRightNow-datePosted).humanize() + ' ago';
+    }
+
+    const calculateDistance = (coords) => {
+        if (!coords || coords.latitude === null || store.getState().coords.latitude === null)
+            return ''
+        const m = getDistance(coords, store.getState().coords, accuracy = 1)
+        if (m >= 0) return m > 1000 ? `· ${(m/1000).toFixed(1)} km` : `· ${m} m`
     }
 
     return (
         <TouchableHighlight onPress={()=>{}} underlayColor={'gainsboro'} >
-            <Card style={{paddingTop: 10, paddingBottom: 10}}>
-                <Card.Title 
-                    title={ '\t' + (postData.title || 'Untitled Listing')  } 
-                    subtitle={'\t'+ (postData.type || 'requesting').toUpperCase()}
-                    left={(props) => (<Avatar.Icon icon="folder" />)}
-                />
-                <Card.Content>
-                    <Paragraph>{ calculatePostedAgo(postData.created_at) }</Paragraph>
-                    <Paragraph>{ postData.description || 'No additional information given...' }</Paragraph>
-                </Card.Content>
-                <Card.Actions>
-                    <Button>Message</Button>
-                </Card.Actions>
+            <Card style={{paddingTop: 16, paddingBottom: 16 }}>
+                <View style={{ flex: 3, flexDirection: 'row' }}>
+                    <View style={{ flex: 2 }}>
+                        <Card.Title 
+                            title={ '\t' + (postData.title || 'Untitled Listing')  } 
+                            subtitle={'\t'+ (postData.type || 'requesting').toUpperCase() + ' · ' + calculatePostedAgo(postData.created_at) + ' ' + (calculateDistance(postData.coords) || '')}
+                            left={(props) => (<Avatar.Icon icon="folder" />)}
+                        />
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'flex-end', paddingTop: 8 }}>
+                        <Card.Actions>
+                            <Button>Message</Button>
+                        </Card.Actions>
+                    </View>
+                </View>
             </Card>
         </TouchableHighlight>
     );

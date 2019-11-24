@@ -74,9 +74,6 @@ const SettingsScreen = () => {
                 <Button onPress={Network.signout}>
                     <Text>Sign Out</Text>
                 </Button>
-                <Button>
-                    <Text>Delete account</Text>
-                </Button>
             </View>
         </View>
     );

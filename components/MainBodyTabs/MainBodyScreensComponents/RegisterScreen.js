@@ -22,7 +22,7 @@ const RegisterScreen = ({ callback, switchScreens }) => {
             if (data.error) {
                 throw new Error(data.error)
             }
-            switchScreens()
+            callback()
             Alert.alert('Success', 'Registration success, go get em')
         })
         .catch(err => {
@@ -41,7 +41,7 @@ const RegisterScreen = ({ callback, switchScreens }) => {
                 <TextInput value={email} style={{ width: '100%', marginBottom: 20 }} placeholder='email address' onChangeText={t => setEmail(t)}/>
                 <TextInput value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={t => setPassword(t)}/>
                 <Button onPress={sendRequest} style={UiStyles.uiButton}>Register Account</Button>
-                <Button onPress={switchScreens} style={UiStyles.uiButtonAlt}>I alrady have an account</Button>
+                <Button onPress={callback} style={UiStyles.uiButtonAlt}>I alrady have an account</Button>
             </View>
         </View>
     )

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '../config/app'
+import { AsyncStorage } from 'react-native'
 
 class Network {
     static token = ''
@@ -12,6 +13,7 @@ class Network {
             type: 'SET_AUTH',
             value: false
         })
+        AsyncStorage.removeItem(`superSecureCredentials`)
     }
 
     static getHeaders() {

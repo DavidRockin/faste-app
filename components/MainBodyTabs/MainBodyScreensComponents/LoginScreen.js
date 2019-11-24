@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { Text, View, Alert } from 'react-native';
+import React, { Component, useState, useEffect } from 'react';
+import { Text, View, Alert, AsyncStorage } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import axios from 'axios'
 import config from '../../../config/app'
@@ -11,10 +11,14 @@ import Network from '../../../helpers/Network'
 var autoLogin = true
 
 const LoginScreen = ({ callback, switchScreens }) => {
-    const [ email, setEmail ] = useState('abc@abc.com')
-    const [ password, setPassword ] = useState('123')
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
 
-    function sendRequest() {
+    function doLogin() {
+        sendRequest(email, password)
+    }
+
+    function sendRequest(email, password) {
         autoLogin = false
         axios.post(config.endpoint + `/api/login`, {
             email, password
@@ -23,8 +27,9 @@ const LoginScreen = ({ callback, switchScreens }) => {
             if (data.error) {
                 throw new Error('Invalid login request, please try again')
             }
+            saveCreds(email, password)
             Network.token = data.token
-            callback()
+            switchScreens()
         })
         .catch(err => {
             console.log(err)
@@ -32,8 +37,28 @@ const LoginScreen = ({ callback, switchScreens }) => {
         })
     }
 
-    if (autoLogin)
-        sendRequest()
+    async function saveCreds(email, password) {
+        try {
+            // in an ideal world we'd use sessions... :)
+            await AsyncStorage.setItem(`superSecureCredentials`, JSON.stringify({ email, password }))
+        } catch (e) {
+            Alert.alert(`Failed to sign in`, e.toString())
+        }
+    }
+
+    async function populateCreds() {
+        try {
+            var data = await AsyncStorage.getItem(`superSecureCredentials`)
+            if (data !== null) {
+                data = JSON.parse(data)
+                sendRequest(data.email, data.password)
+            }
+        } catch (e) {
+            console.warn(e)
+        }
+    }
+
+    useEffect(() => { populateCreds() }, [])
 
     return (
         <View style={{ flex: 1, backgroundColor: '#1a78cf' }}>
@@ -44,8 +69,8 @@ const LoginScreen = ({ callback, switchScreens }) => {
             <View style={{ padding: 48, justifyContent: 'center', alignItems: 'center' }}>
                 <TextInput value={email} style={{ width: '100%', marginBottom: 20 }} placeholder='email address' onChangeText={setEmail} />
                 <TextInput value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={setPassword} />
-                <Button onPress={sendRequest} style={UiStyles.uiButton}>Sign in</Button>
-                <Button onPress={switchScreens} style={UiStyles.uiButtonAlt}>Register an Account</Button>
+                <Button onPress={doLogin} style={UiStyles.uiButton}>Sign in</Button>
+                <Button onPress={callback} style={UiStyles.uiButtonAlt}>Register an Account</Button>
             </View>
         </View>
     )
