@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, View, Text, StyleSheet, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import Post from './Post'
 import Network from '../../../../helpers/Network';
@@ -18,25 +18,31 @@ function wait(timeout) {
 
 const HomeScreen = () => {
     const [ posts, setPosts ] = useState([]);
-    const [ loading, setLoading ] = useState(true);
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-      }, [refreshing]);
 
-    if (loading && posts.length === 0) {
-        setLoading(false)
+    const getPosts = () => {
         Network.getAdListings()
         .then(resp => {
-            setPosts(resp.ads)
+            setPosts(resp.ads.reverse());
+            
+            // Artificial loading time
+            wait(1000).then(() => setRefreshing(false));
         })
         .catch(err => {
             console.log(err)
             Alert.alert(`Error`, err.statusText || err.toString())
-        })
+        });
     }
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        getPosts();
+      }, [refreshing]);
+
+    useEffect(() => {
+        getPosts();
+      }, []);
 
     return (
         <View style={styles.mainMenuContainer}>
@@ -44,9 +50,8 @@ const HomeScreen = () => {
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                   }>
-                {loading
-                    ? <ActivityIndicator size="large" style={{ marginTop: 50 }}/>
-                    : posts.reverse().map((v, k) => {
+
+                    {posts.map((v, k) => {
                         return <Post postData={v} key={k} />
                     })
                 }
