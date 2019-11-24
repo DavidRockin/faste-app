@@ -34,7 +34,7 @@ const Post = ({ postData, newMessage }) => {
                     </View>
                     <View style={{ flex: 1, alignItems: 'flex-end', paddingTop: 8, position: 'absolute', right: 0 }}>
                         <Card.Actions>
-                            <Button onPress={()=> {newMessage(postData.ownerId)}}>Message</Button>
+                            <Button onPress={()=> {newMessage(postData.userId, postData.userName)}}>Message</Button>
                         </Card.Actions>
                     </View>
                 </View>

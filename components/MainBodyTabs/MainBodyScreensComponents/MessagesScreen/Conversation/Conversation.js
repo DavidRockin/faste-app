@@ -7,8 +7,8 @@ const Conversation = (props) => (
         <>
             <Card.Title 
                 id={props.name}
-                title={'\t' + props.name}
-                subtitle={'\t' + props.lastMessage}
+                title={'\t' + (props.name? props.name: 'Message')}
+                subtitle={'\t' + (props.lastMessage? props.lastMessage: '')}
                 style={{padding: 50}}
                 left={()=> (<Avatar.Text label={props.shortForm} />)}
             />

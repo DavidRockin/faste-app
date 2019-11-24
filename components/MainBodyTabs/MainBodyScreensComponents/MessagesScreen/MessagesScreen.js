@@ -4,6 +4,7 @@ import Conversation from './Conversation/Conversation';
 import EmptyConversation from './Conversation/EmptyConversation';
 import axios from 'axios';
 import config from '../../../../config/app';
+import store from '../../../../helpers/store';
 import Network from '../../../../helpers/Network';
 
 function wait(timeout) {
@@ -24,7 +25,14 @@ const MessagesScreen = (props) => {
     }, [props.navigation]);
 
     useEffect(() => {
-        //console.log(conversations);
+        let otherUserId = store.getState().newMessageUser.userId;
+        if(otherUserId !== undefined && otherUserId !== '' && otherUserId in conversations){
+            console.log(conversations);
+            store.dispatch({
+                type: 'SET_NEW_MESSAGE_USER', newMessageUser: {userId : '', userName: ''}
+            });
+            openChatScreen(otherUserId);
+        }
     }, [conversations])
 
     const getUserConversations = () => {
@@ -61,8 +69,8 @@ const MessagesScreen = (props) => {
                 otherUserId = message.receiverId;
                 otherUserName = message.receiverName;
             }
+
             setUserIdToName({...userIdToName, [otherUserId]: otherUserName});
-            
             // Add message to convo object
             if(otherUserId in convoObject){
                 convoObject[otherUserId].push(message);
@@ -71,10 +79,11 @@ const MessagesScreen = (props) => {
             }
         }
 
-        //console.log(props.navigation.getParam('action'));
-        // if(!props.navigation.getParam('otherUserId') in convoObject){
-        //     convoObject[otherUserId] = [];
-        // }
+        let otherUserId = store.getState().newMessageUser.userId;
+        if(otherUserId !== undefined && otherUserId !== '' && !(otherUserId in convoObject)){
+            convoObject[otherUserId] = [];
+            setUserIdToName({...userIdToName, [otherUserId]: store.getState().newMessageUser.userName})
+        }
 
         setConversations(convoObject); 
     }
@@ -84,6 +93,7 @@ const MessagesScreen = (props) => {
         props.navigation.navigate('Chat', {
             messages: conversations[key],
             otherUserId: key,
+            otherUserName: userIdToName[key],
             currentUserId: currentUserId,
             getUserConversations: getUserConversations,
         });
@@ -93,26 +103,30 @@ const MessagesScreen = (props) => {
         if(name){
             return name.substring(0,2).toUpperCase();
         }else{
-            return 'DE';
+            return 'ME';
         }
         
     }
 
     // TODO Sort by date!!!
     const getLastMessage = (messages) => {
-        return messages[messages.length-1].content;
+        if(messages.length === 0){
+            return '';
+        }else{
+            return messages[messages.length-1].content;
+        }
     }
 
     const conversationComponentList = [];
     for(const key of Object.keys(conversations)){
-        conversationComponentList.push(
-            <Conversation 
-                key={key}
-                name={userIdToName[key]} 
-                lastMessage={getLastMessage(conversations[key])} 
-                shortForm={getShortForm(userIdToName[key])}
-                openChatScreen={()=> openChatScreen(key)}/>
-        )
+            conversationComponentList.push(
+                <Conversation 
+                    key={key}
+                    name={userIdToName[key]} 
+                    lastMessage={getLastMessage(conversations[key])} 
+                    shortForm={getShortForm(userIdToName[key])}
+                    openChatScreen={()=> openChatScreen(key)}/>
+            )
     }
 
     const onRefresh = React.useCallback(() => {

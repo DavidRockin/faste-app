@@ -7,7 +7,11 @@ const store = createStore(reducer, {
       latitude: null,
       longitude: null
     },
-    posts: []
+    posts: [],
+    newMessageUser: {
+      userId: '',
+      userName: ''
+    }
   })
 
 export default store

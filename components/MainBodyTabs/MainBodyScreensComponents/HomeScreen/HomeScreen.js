@@ -42,11 +42,11 @@ const HomeScreen = (props) => {
         return () => isSubscribed = false;
     }, [refreshing]);
 
-    const newMessage = (adOwnerId) => {
-        props.navigation.navigate('Messages', {
-            otherUserId: 'teststs',
-            action: 'createMessage'
+    const newMessage = (adOwnerId, adOwnerName) => {
+        store.dispatch({
+            type: 'SET_NEW_MESSAGE_USER', newMessageUser: {userId : adOwnerId, userName: adOwnerName}
         });
+        props.navigation.navigate('Messages');
     }
 
     useEffect(() => {

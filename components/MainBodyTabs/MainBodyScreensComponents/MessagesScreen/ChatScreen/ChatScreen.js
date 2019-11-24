@@ -29,18 +29,25 @@ const ChatScreen = (props) => {
 
   const onSend = (newMessage = []) => {
     setMessages(GiftedChat.append(messages, newMessage));
-    axios.post(config.endpoint + '/api/users/' + props.navigation.getParam('currentUserId') + '/messages', {
-      content: newMessage[0].text,
-      receiverId: props.navigation.getParam('otherUserId')
-    })
-    .then(({data}) => {
-      if (data.error) {
-          throw new Error('Invalid message sending attempt.')
-      }
+    let otherUserId = props.navigation.getParam('otherUserId');
+    let currentUserId = props.navigation.getParam('currentUserId');
+    if(otherUserId === undefined || currentUserId === undefined){
+      console.error('otherUserId or currentUserId is undefined.');
       props.navigation.getParam('getUserConversations')();
-    }).catch(err => {
-        console.error(err)
-    });  
+    }else{
+      axios.post(config.endpoint + '/api/users/' + currentUserId + '/messages', {
+        content: newMessage[0].text,
+        receiverId: otherUserId
+      })
+      .then(({data}) => {
+        if (data.error) {
+            throw new Error('Invalid message sending attempt.')
+        }
+        props.navigation.getParam('getUserConversations')();
+      }).catch(err => {
+          console.error(err)
+      });  
+    }
   };
 
   return (

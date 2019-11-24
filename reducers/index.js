@@ -13,6 +13,8 @@ export default function reducer(state = {
             return { ...state, coords: action.coords }
         case 'SET_POSTS':
             return { ...state, posts: action.posts }
+        case 'SET_NEW_MESSAGE_USER':
+            return {...state, newMessageUser: action.newMessageUser}
         default:
             return state
     }
