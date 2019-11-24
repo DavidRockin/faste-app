@@ -19,7 +19,7 @@ const MainAppContainer = ({ store }) => {
   const [ isLogin, setLogin ] = useState(true)
 
   function test() {
-    setAuth(true)
+    setLogin(!isLogin)
   }
 
   function switchScreens() {

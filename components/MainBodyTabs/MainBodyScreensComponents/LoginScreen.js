@@ -11,8 +11,8 @@ import Network from '../../../helpers/Network'
 var autoLogin = true
 
 const LoginScreen = ({ callback, switchScreens }) => {
-    const [ email, setEmail ] = useState('abc@abc.com')
-    const [ password, setPassword ] = useState('123')
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
 
     function sendRequest() {
         autoLogin = false
@@ -24,16 +24,13 @@ const LoginScreen = ({ callback, switchScreens }) => {
                 throw new Error('Invalid login request, please try again')
             }
             Network.token = data.token
-            callback()
+            switchScreens()
         })
         .catch(err => {
             console.log(err)
             Alert.alert('Error', err.statusText || err.toString())
         })
     }
-
-    if (autoLogin)
-        sendRequest()
 
     return (
         <View style={{ flex: 1, backgroundColor: '#1a78cf' }}>
@@ -45,7 +42,7 @@ const LoginScreen = ({ callback, switchScreens }) => {
                 <TextInput value={email} style={{ width: '100%', marginBottom: 20 }} placeholder='email address' onChangeText={setEmail} />
                 <TextInput value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={setPassword} />
                 <Button onPress={sendRequest} style={UiStyles.uiButton}>Sign in</Button>
-                <Button onPress={switchScreens} style={UiStyles.uiButtonAlt}>Register an Account</Button>
+                <Button onPress={callback} style={UiStyles.uiButtonAlt}>Register an Account</Button>
             </View>
         </View>
     )
