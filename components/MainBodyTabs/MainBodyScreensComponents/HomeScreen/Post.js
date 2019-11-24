@@ -1,39 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import EStyleSheet from 'react-native-extended-stylesheet';
+import moment from 'moment'
 
-const styles = EStyleSheet.create({
-    post: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    titleSection: {
-        flex:1,
-        flexDirection: 'row',
-    },
-    title: {
-        fontSize: '2rem',
-    },
-    icon: {
-        size: '50rem',
+const Post = ({ postData }) => {
+    
+    const calculatePostedAgo = (dateCreated) => {
+        const dateRightNow = Date.now();
+        const datePosted = new Date(dateCreated);
+        return 'Posted: '+ moment.duration(dateRightNow-datePosted).humanize() + ' ago';
     }
-});
 
-const Post = ({ postData }) => (
-    <Card>
-        <Card.Title style={styles.titleSection}
-            title={ postData.title || 'Untitled Listing' } style={styles.title}
-            left={(props) => (<Avatar.Icon style={styles.icon} icon="folder" />)}
-        />
-        <Card.Content>
-            <Title>{ (postData.type || 'requesting').toUpperCase()} : { postData.title || 'Untitled Listing' }</Title>
-            <Paragraph>{ postData.description || 'No additional information given...' }</Paragraph>
-        </Card.Content>
-        <Card.Actions>
-            <Button>Message</Button>
-        </Card.Actions>
-    </Card>
-);
+    return (
+        <TouchableHighlight onPress={()=>{}} underlayColor={'gainsboro'} >
+            <Card style={{paddingTop: 10, paddingBottom: 10}}>
+                <Card.Title 
+                    title={ '\t' + (postData.title || 'Untitled Listing')  } 
+                    subtitle={'\t'+ (postData.type || 'requesting').toUpperCase()}
+                    left={(props) => (<Avatar.Icon icon="folder" />)}
+                />
+                <Card.Content>
+                    <Paragraph>{ calculatePostedAgo(postData.created_at) }</Paragraph>
+                    <Paragraph>{ postData.description || 'No additional information given...' }</Paragraph>
+                </Card.Content>
+                <Card.Actions>
+                    <Button>Message</Button>
+                </Card.Actions>
+            </Card>
+        </TouchableHighlight>
+    );
+};
 
 export default Post;

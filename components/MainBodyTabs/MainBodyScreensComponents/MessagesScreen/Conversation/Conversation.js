@@ -1,9 +1,9 @@
 import React from 'react';
 import { Avatar, Card, Divider } from 'react-native-paper';
-import { TouchableHighlight } from 'react-native'
+import { TouchableHighlight } from 'react-native';
 
 const Conversation = (props) => (
-    <TouchableHighlight onPress={props.openChatScreen} underlayColor={'aliceblue'} >
+    <TouchableHighlight onPress={props.openChatScreen} underlayColor={'gainsboro'} >
         <>
             <Card.Title 
                 id={props.name}
