@@ -2,14 +2,22 @@ import React, { Component } from 'react';
 import MainAppContainer from './components/MainAppContainer'
 import { Platform, StyleSheet, Text, View } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
-});
+import { Provider } from 'react-redux'
+import { createStore } from 'redux';
+import reducer from './reducers'
+import Network from './helpers/Network';
+
+const store = createStore(reducer, {
+  authenticated: false
+})
+
+Network.store = store
 
 const App = () => {
   return(
-    <MainAppContainer/>
+    <Provider store={store}>
+      <MainAppContainer store={store} />
+    </Provider>
   )
 }
 export default App;

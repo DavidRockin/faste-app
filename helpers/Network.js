@@ -4,6 +4,15 @@ import config from '../config/app'
 class Network {
     static token = ''
     static userData = null
+    static authenticated = false
+    static store = null
+
+    static signout() {
+        Network.store.dispatch({
+            type: 'SET_AUTH',
+            value: false
+        })
+    }
 
     static getHeaders() {
         return {
@@ -45,6 +54,30 @@ class Network {
                 return userData._id
             })
             .catch(() => null)
+    }
+
+    static async updateUserInfo(data) {
+        return axios.post(config.endpoint + `/api/user`, data, {
+            headers: { 
+                ...Network.getHeaders()
+            }
+        })
+        .then(({ data }) => {
+            if (data.error) throw new Error(data.error)
+            return data
+        })
+    }
+
+    static async createAd(data) {
+        return axios.post(config.endpoint + `/api/ads`, data, {
+            headers: { 
+                ...Network.getHeaders()
+            }
+        })
+        .then(({ data }) => {
+            if (data.error) throw new Error(data.error)
+            return data
+        })
     }
 }
 

@@ -7,8 +7,9 @@ import ButtomMenuContainer from './BottomMenu';
 
 import LoginScreen from './MainBodyTabs/MainBodyScreensComponents/LoginScreen'
 import RegisterScreen from './MainBodyTabs/MainBodyScreensComponents/RegisterScreen';
+import Network from '../helpers/Network';
 
-const MainAppContainer = () => {
+const MainAppContainer = ({ store }) => {
 
   const [caption, setCaption] = useState("FASTE");
   const [ authed, setAuth ] = useState(false)
@@ -17,10 +18,17 @@ const MainAppContainer = () => {
   function test() {
     setAuth(true)
   }
-  
+
   function switchScreens() {
-    setLogin(!isLogin)
+    store.dispatch({
+      type: 'SET_AUTH',
+      value: !store.authenticated
+    })
   }
+
+  store.subscribe(() => {
+    setAuth(store.getState().authenticated)
+  })
 
   return (
     <View style={{ flex: 6 }}>
@@ -41,4 +49,4 @@ const MainAppContainer = () => {
   );
 }
 
-export default MainAppContainer;
+export default MainAppContainer;4
