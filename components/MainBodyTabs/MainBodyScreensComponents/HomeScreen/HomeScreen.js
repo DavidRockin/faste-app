@@ -3,6 +3,8 @@ import { Alert, View, Text, StyleSheet, ScrollView, RefreshControl } from 'react
 import Post from './Post'
 import Network from '../../../../helpers/Network';
 
+import store from '../../../../helpers/store'
+
 const styles = StyleSheet.create({
     mainMenuContainer: {
         flex: 1,
@@ -27,6 +29,9 @@ const HomeScreen = () => {
         .then(resp => {
             if(isSubscribed){
                 setPosts(resp.ads.reverse());
+                store.dispatch({
+                    type: 'SET_POSTS', posts: resp.ads
+                })
                 // Artificial loading time
                 wait(1000).then(() => setRefreshing(false));
             }
@@ -43,6 +48,9 @@ const HomeScreen = () => {
         .then(resp => {
             if(isSubscribed){
                 setPosts(resp.ads.reverse());
+                store.dispatch({
+                    type: 'SET_POSTS', posts: resp.ads
+                })
                 // Artificial loading time
                 wait(1000).then(() => setRefreshing(false));
             }
@@ -59,7 +67,6 @@ const HomeScreen = () => {
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                   }>
-
                     {posts.map((v, k) => {
                         return <Post postData={v} key={k} />
                     })
