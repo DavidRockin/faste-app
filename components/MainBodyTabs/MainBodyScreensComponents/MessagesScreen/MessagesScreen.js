@@ -21,13 +21,25 @@ const MessagesScreen = (props) => {
     const [refreshing, setRefreshing] = React.useState(false);
 
     useEffect(() => {
-        getUserConversations();
-    }, [props.navigation]);
+        const interval = setInterval(() => {
+            getUserConversations();
+            let otherUserId = store.getState().newMessageUser.userId;
+            if(otherUserId !== undefined && otherUserId !== '' && otherUserId in conversations){
+                store.dispatch({
+                    type: 'SET_NEW_MESSAGE_USER', newMessageUser: {userId : '', userName: ''}
+                });
+                openChatScreen(otherUserId);
+            }
+        }, 1000);
+    
+        return () => {
+          clearInterval(interval);
+        };
+      }, []);
 
     useEffect(() => {
         let otherUserId = store.getState().newMessageUser.userId;
         if(otherUserId !== undefined && otherUserId !== '' && otherUserId in conversations){
-            console.log(conversations);
             store.dispatch({
                 type: 'SET_NEW_MESSAGE_USER', newMessageUser: {userId : '', userName: ''}
             });
@@ -58,6 +70,7 @@ const MessagesScreen = (props) => {
 
     const setupConversations = (currentUserId, messages) => {
         const convoObject = {};
+        const newUserIdToName = {...userIdToName};
         for(const message of messages){
             // Set the id of the other user involved in conversation
             let otherUserId = '';
@@ -69,8 +82,8 @@ const MessagesScreen = (props) => {
                 otherUserId = message.receiverId;
                 otherUserName = message.receiverName;
             }
+            newUserIdToName[otherUserId] = otherUserName;
 
-            setUserIdToName({...userIdToName, [otherUserId]: otherUserName});
             // Add message to convo object
             if(otherUserId in convoObject){
                 convoObject[otherUserId].push(message);
@@ -82,9 +95,9 @@ const MessagesScreen = (props) => {
         let otherUserId = store.getState().newMessageUser.userId;
         if(otherUserId !== undefined && otherUserId !== '' && !(otherUserId in convoObject)){
             convoObject[otherUserId] = [];
-            setUserIdToName({...userIdToName, [otherUserId]: store.getState().newMessageUser.userName})
+            newUserIdToName[otherUserId] = store.getState().newMessageUser.userName;
         }
-
+        setUserIdToName(newUserIdToName);
         setConversations(convoObject); 
     }
 

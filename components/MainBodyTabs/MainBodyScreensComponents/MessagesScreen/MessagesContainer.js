@@ -7,11 +7,7 @@ import { createAppContainer } from 'react-navigation';
 const MessagesStackNavigator = createStackNavigator(
     {
         Messages: {
-            screen: (props) => {
-                //console.log(props);
-                //console.log(props.navigation.getParam('action'))
-                return <MessagesScreen {...props} />
-            },
+            screen: MessagesScreen,
             navigationOptions: {
                 header: null,
             }
