@@ -1,16 +1,18 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Text, View, Alert, AsyncStorage } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, ActivityIndicator } from 'react-native-paper';
 import axios from 'axios'
 import config from '../../../config/app'
 
 import UiStyles from '../../Styles/ui'
+import { ScrollView } from 'react-native-gesture-handler';
 
 import Network from '../../../helpers/Network'
 
 var autoLogin = true
 
 const LoginScreen = ({ callback, switchScreens }) => {
+    const [ isAuthing, setAuthing ] = useState(false)
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
@@ -20,6 +22,7 @@ const LoginScreen = ({ callback, switchScreens }) => {
 
     function sendRequest(email, password) {
         autoLogin = false
+        setAuthing(true)
         axios.post(config.endpoint + `/api/login`, {
             email, password
         })
@@ -33,6 +36,7 @@ const LoginScreen = ({ callback, switchScreens }) => {
         })
         .catch(err => {
             console.log(err)
+            setAuthing(false)
             Alert.alert('Error', err.statusText || err.toString())
         })
     }
@@ -62,16 +66,21 @@ const LoginScreen = ({ callback, switchScreens }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#1a78cf' }}>
-            <View style={{ paddingTop: 130, paddingBottom: 30, alignContent: 'center' }}>
-                <Text style={{ color: '#FFF', fontWeight: 'bold', paddingBottom: 15, fontSize: 30, textAlign: 'center' }}>Login into faste</Text>
-                <Text style={{ color: '#fff', opacity: 0.80, fontSize: 20, textAlign: 'center' }}>make the world a better place</Text>
-            </View>
-            <View style={{ padding: 48, justifyContent: 'center', alignItems: 'center' }}>
-                <TextInput value={email} style={{ width: '100%', marginBottom: 20 }} placeholder='email address' onChangeText={setEmail} />
-                <TextInput secureTextEntry={true} value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={setPassword} />
-                <Button color='#fff' onPress={doLogin} style={UiStyles.uiButton}>Sign in</Button>
-                <Button color='#333' onPress={callback} style={UiStyles.uiButtonAlt}>Register an Account</Button>
-            </View>
+            <ScrollView style={{ flex: 1 }}>
+                <View style={{ paddingTop: 130, paddingBottom: 30, alignContent: 'center' }}>
+                    <Text style={{ color: '#FFF', fontWeight: 'bold', paddingBottom: 15, fontSize: 30, textAlign: 'center' }}>Login into faste</Text>
+                    <Text style={{ color: '#fff', opacity: 0.80, fontSize: 20, textAlign: 'center' }}>make the world a better place</Text>
+                </View>
+                <ActivityIndicator style={{ opacity: isAuthing ? 1 : 0 }} color='white' />
+                <View style={{ padding: 48, justifyContent: 'center', alignItems: 'center' }}>
+                    <TextInput keyboardType='email-address' value={email} style={{ width: '100%', marginBottom: 20 }} placeholder='email address' onChangeText={setEmail} />
+                    <TextInput secureTextEntry={true} value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={setPassword} />
+                    <Button color='#fff' onPress={doLogin} style={UiStyles.uiButton}>
+                        Sign in
+                    </Button>
+                    <Button color='#333' onPress={callback} style={UiStyles.uiButtonAlt}>Register an Account</Button>
+                </View>
+            </ScrollView>
         </View>
     )
 }

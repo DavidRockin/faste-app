@@ -51,7 +51,7 @@ const SettingsScreen = () => {
                 <View style={{ flex: 7, width: '100%' }}>
                     <View style={{ flex: 1, width: '100%' }}>
                         <Text style={{ fontSize: 18, padding: 8 }}>📧 Your email</Text>
-                        <TextInput value={email} onChangeText={setEmail} />
+                        <TextInput keyboardType='email-address' value={email} onChangeText={setEmail} />
                     </View>
                     <View style={{ flex: 1, width: '100%' }}>
                         <Text style={{ fontSize: 18, padding: 8 }}>👤 Your Name</Text>
@@ -63,7 +63,7 @@ const SettingsScreen = () => {
                     </View>
                     <View style={{ flex: 1, width: '100%' }}>
                         <Text style={{ fontSize: 18, padding: 8 }}>📞 Your Phone Number</Text>
-                        <TextInput value={telephone} onChangeText={setTelephone} />
+                        <TextInput keyboardType='phone-pad' value={telephone} onChangeText={setTelephone} />
                     </View>
                     <View style={{ flex: 1, width: '100%', paddingTop: 20}}>
                         <Button onPress={saveChanges} style={UiStyles.uiButton} color='#fff'>
