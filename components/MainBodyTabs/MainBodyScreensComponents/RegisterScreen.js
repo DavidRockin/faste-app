@@ -40,8 +40,8 @@ const RegisterScreen = ({ callback, switchScreens }) => {
                 <TextInput value={name} style={{ width: '100%', marginBottom: 20 }} placeholder='your name' onChangeText={t => setName(t)} />
                 <TextInput value={email} style={{ width: '100%', marginBottom: 20 }} placeholder='email address' onChangeText={t => setEmail(t)}/>
                 <TextInput value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={t => setPassword(t)}/>
-                <Button onPress={sendRequest} style={UiStyles.uiButton}>Register Account</Button>
-                <Button onPress={callback} style={UiStyles.uiButtonAlt}>I alrady have an account</Button>
+                <Button color='#fff' onPress={sendRequest} style={UiStyles.uiButton}>Register Account</Button>
+                <Button color='#333' onPress={callback} style={UiStyles.uiButtonAlt}>I already have an account</Button>
             </View>
         </View>
     )
