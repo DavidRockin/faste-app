@@ -6,6 +6,7 @@ import ButtonComponent from './ButtonComponent';
 import TextInputTemplateComponent from "./TextInputTemplateComponent";
 import InputSelector from './InputSelector';
 import { ScrollView } from 'react-native-gesture-handler';
+import Network from '../../../helpers/Network';
 
 const TemplateScreen = () => {
     const [templateFoodTitle, setTemplateFoodTitle] = useState("");
@@ -35,6 +36,15 @@ const TemplateScreen = () => {
             console.log(selected);
             setPickerValue(selected);
         }
+    }
+
+    const submitCallback = () => {
+        Network.createAd({
+            type: pickerValue,
+            title: templateFoodTitle,
+            description: templateDescription,
+            food: foodOfferList
+        })
     }
 
     function addFoodOfferItem() {
@@ -107,7 +117,7 @@ const TemplateScreen = () => {
                     }
 
                     <TextInputTemplateComponent textInputCaption={"Description"} textInputBody={templateDescription} onChangeHandler={handleTemplateDescription} />
-                    <ButtonComponent />
+                    <ButtonComponent clickCallback={submitCallback} />
                 </>
             );
         }
@@ -116,7 +126,7 @@ const TemplateScreen = () => {
                 <>
                     <TextInputTemplateComponent textInputCaption={"Food name"} textInputBody={templateFoodTitle} onChangeHandler={handleFoodTitleChange} />
                     <TextInputTemplateComponent textInputCaption={"Description"} textInputBody={templateDescription} onChangeHandler={handleTemplateDescription} />
-                    <ButtonComponent />
+                    <ButtonComponent clickCallback={submitCallback} />
                 </>
             );
     }

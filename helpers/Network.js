@@ -68,6 +68,18 @@ class Network {
             return data
         })
     }
+
+    static async createAd(data) {
+        return axios.post(config.endpoint + `/api/ads`, data, {
+            headers: { 
+                ...Network.getHeaders()
+            }
+        })
+        .then(({ data }) => {
+            if (data.error) throw new Error(data.error)
+            return data
+        })
+    }
 }
 
 export default Network
