@@ -47,6 +47,18 @@ class Network {
             })
             .catch(() => null)
     }
+
+    static async updateUserInfo(data) {
+        return axios.post(config.endpoint + `/api/user`, data, {
+            headers: { 
+                ...Network.getHeaders()
+            }
+        })
+        .then(({ data }) => {
+            if (data.error) throw new Error(data.error)
+            return data
+        })
+    }
 }
 
 export default Network
