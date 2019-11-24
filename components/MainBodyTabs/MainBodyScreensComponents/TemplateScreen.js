@@ -10,7 +10,7 @@ import Network from '../../../helpers/Network';
 
 import store from '../../../helpers/store'
 
-const TemplateScreen = () => {
+const TemplateScreen = (props) => {
     const [coords, setCoords] = useState({})
     const [templateFoodTitle, setTemplateFoodTitle] = useState("");
     const [templateDescription, setTemplateDescription] = useState("");
@@ -50,7 +50,8 @@ const TemplateScreen = () => {
             coords: store.getState().coords
         })
         .then(resp => {
-            Alert.alert(`Success`, `we need to automatically change to this ad for u`)
+            props.navigation.navigate('Home')
+            return
         })
         .catch(err => {
             Alert.alert(`Error`, err.statusText || err.toString())
@@ -113,7 +114,7 @@ const TemplateScreen = () => {
                                             foodOfferList.length >= 1 ?
                                                 <Button contentStyle={{ height: 50 }}
                                                     icon="close"
-                                                    style={{ textAlign: "center", width: 50, borderRadius:"100%" }}
+                                                    style={{ textAlign: "center", width: 20, borderRadius:"100%" }}
                                                     mode="outlined" onPress={() => removeFoodOfferItem(item.id)}>
                                                 </Button>
                                                 :
