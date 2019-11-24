@@ -67,7 +67,7 @@ const SettingsScreen = () => {
                 </View>
             </View>
             <View style={{ flex: 2 }}>
-                <Button>
+                <Button onPress={Network.signout}>
                     <Text>Sign Out</Text>
                 </Button>
                 <Button>

@@ -4,6 +4,15 @@ import config from '../config/app'
 class Network {
     static token = ''
     static userData = null
+    static authenticated = false
+    static store = null
+
+    static signout() {
+        Network.store.dispatch({
+            type: 'SET_AUTH',
+            value: false
+        })
+    }
 
     static getHeaders() {
         return {

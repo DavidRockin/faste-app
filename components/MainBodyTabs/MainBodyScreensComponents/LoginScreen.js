@@ -8,11 +8,14 @@ import UiStyles from '../../Styles/ui'
 
 import Network from '../../../helpers/Network'
 
+var autoLogin = true
+
 const LoginScreen = ({ callback, switchScreens }) => {
     const [ email, setEmail ] = useState('abc@abc.com')
     const [ password, setPassword ] = useState('123')
 
     function sendRequest() {
+        autoLogin = false
         axios.post(config.endpoint + `/api/login`, {
             email, password
         })
@@ -30,7 +33,8 @@ const LoginScreen = ({ callback, switchScreens }) => {
         })
     }
 
-    sendRequest()
+    if (autoLogin)
+        sendRequest()
 
     return (
         <View style={{ flex: 1, backgroundColor: '#1a78cf' }}>
