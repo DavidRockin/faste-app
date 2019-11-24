@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Keyboard, TouchableWithoutFeedback, Text, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 
@@ -8,7 +8,10 @@ import InputSelector from './InputSelector';
 import { ScrollView } from 'react-native-gesture-handler';
 import Network from '../../../helpers/Network';
 
+import store from '../../../helpers/store'
+
 const TemplateScreen = () => {
+    const [coords, setCoords] = useState({})
     const [templateFoodTitle, setTemplateFoodTitle] = useState("");
     const [templateDescription, setTemplateDescription] = useState("");
     const [numberOfFood, setNumberOfFood] = useState("");
@@ -43,7 +46,8 @@ const TemplateScreen = () => {
             type: pickerValue,
             title: templateFoodTitle,
             description: templateDescription,
-            food: foodOfferList
+            food: foodOfferList,
+            coords: store.getState().coords
         })
         .then(resp => {
             Alert.alert(`Success`, `we need to automatically change to this ad for u`)
