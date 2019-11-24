@@ -20,6 +20,7 @@ const TextInputTemplateComponent = ({ textInputCaption, textInputBody, onChangeH
         return (
             <>
                 <TextInput
+                    keyboardType="numeric"
                     label={textInputCaption}
                     mode={"outlined"}
                     onChangeText={onChangeHandler}
