@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import ExploreMapComponent from './ExploreMapComponent';
 
 const ExploreScreen = () => {
 
@@ -41,7 +42,7 @@ const ExploreScreen = () => {
             )}
             {
                 geolocationCustom.ready && (
-                    <Text>Longitude: {geolocationCustom.where.lng}, Latitude: {geolocationCustom.where.lat}</Text>
+                    <ExploreMapComponent longitude={geolocationCustom.where.lng} latitude={geolocationCustom.where.lat}/>
                 )
             }
         </View>
