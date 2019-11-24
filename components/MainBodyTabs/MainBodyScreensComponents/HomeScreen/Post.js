@@ -29,7 +29,7 @@ const Post = ({ postData, newMessage }) => {
                         <Card.Title 
                             title={ '\t' + (postData.title || 'Untitled Listing')  } 
                             subtitle={'\t'+ (postData.type || 'requesting').toUpperCase() + ' · ' + calculatePostedAgo(postData.created_at) + ' ' + (calculateDistance(postData.coords) || '')}
-                            left={(props) => (<Avatar.Icon icon="folder" />)}
+                            left={(props) => (<Avatar.Icon icon="apple" />)}
                         />
                     </View>
                     <View style={{ flex: 1, alignItems: 'flex-end', paddingTop: 8, position: 'absolute', right: 0 }}>
