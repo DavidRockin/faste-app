@@ -1,10 +1,18 @@
-import React from 'react';
-import { Picker, View } from 'react-native';
+import React, {useState} from 'react';
+import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 const InputSelector = ({ handler }) => {
 
+    const [isOffer, setOffer] = useState(false);
+
     const changePicker = (value) => {
+        if(value === "offer"){
+            setOffer(true);
+        }
+        else{
+            setOffer(false);
+        }
         handler(value);
     }
 
@@ -12,7 +20,7 @@ const InputSelector = ({ handler }) => {
             <View style={{flexDirection: "row", alignItems:"center", justifyContent:"center", padding: 20}}>
                 <View style={{ flex: 1 }}>
                     <Button
-                        mode="outlined"
+                        mode={isOffer ? "contained" : "outlined"}
                         // style={{width: 100}}
                         onPress={() => changePicker("offer")}>
                             Offer
@@ -20,10 +28,10 @@ const InputSelector = ({ handler }) => {
                 </View>
                 <View style={{ flex: 1 }}>
                     <Button
-                        mode="outlined"
+                        mode={!isOffer ? "contained" : "outlined"}
                         // style={{width: 100}}
-                        onPress={() => handler("buy")}>
-                            Buy
+                        onPress={() => changePicker("buy")}>
+                            Request
                     </Button>
                 </View>
             </View>

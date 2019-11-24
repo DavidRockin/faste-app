@@ -15,7 +15,7 @@ const TemplateScreen = () => {
     const [templateFoodTitle, setTemplateFoodTitle] = useState("");
     const [templateDescription, setTemplateDescription] = useState("");
     const [numberOfFood, setNumberOfFood] = useState("");
-    const [pickerValue, setPickerValue] = useState("");
+    const [pickerValue, setPickerValue] = useState("offer");
 
     const [foodOfferList, setFoodOfferList] = useState([{id: 0, name:"", numberOfItems: 0}]);
 
@@ -141,20 +141,13 @@ const TemplateScreen = () => {
             );
     }
 
-    const emptyForm = () => {
-        return (
-            <>
-
-            </>
-        );
-    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <ScrollView scrollEnabled={pickerValue ? true : false}>
-                <View style={{ flex: 3, alignContent: 'center'}}>
+                <View style={{ flex: 3, alignContent: 'center', padding: 20}}>
                     <InputSelector pickerValue={pickerValue} handler={handleSelectionChange} />
-                    {pickerValue ? fullForm(pickerValue) : emptyForm()}
+                    {fullForm(pickerValue)}
                 </View>
             </ScrollView>
         </TouchableWithoutFeedback>
