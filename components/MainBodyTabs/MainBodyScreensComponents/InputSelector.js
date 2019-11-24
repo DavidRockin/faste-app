@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
-const InputSelector = ({ handler }) => {
+const InputSelector = ({ pickerValue, handler }) => {
 
     const [isOffer, setOffer] = useState(false);
 
@@ -15,6 +15,10 @@ const InputSelector = ({ handler }) => {
         }
         handler(value);
     }
+
+    useEffect(() => {
+        setOffer(pickerValue === 'offer')
+    }, [ pickerValue ])
 
     return (
             <View style={{flexDirection: "row", alignItems:"center", justifyContent:"center", padding: 20}}>

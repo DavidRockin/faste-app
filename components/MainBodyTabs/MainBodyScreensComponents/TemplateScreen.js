@@ -21,6 +21,13 @@ const TemplateScreen = (props) => {
 
     console.log("foodOfferList", foodOfferList.length, foodOfferList);
 
+    const resetForm = () => {
+        setTemplateFoodTitle('')
+        setTemplateDescription('')
+        setFoodOfferList([{id: 0, name:"", numberOfItems: 0}])
+        setPickerValue('request')
+    }
+
     const handleFoodTitleChange = (input) => {
         console.log("Foooood", input);
         setTemplateFoodTitle(input);
@@ -50,6 +57,7 @@ const TemplateScreen = (props) => {
             coords: store.getState().coords
         })
         .then(resp => {
+            resetForm()
             props.navigation.navigate('Home')
             return
         })
