@@ -15,7 +15,7 @@ const TemplateScreen = (props) => {
     const [templateFoodTitle, setTemplateFoodTitle] = useState("");
     const [templateDescription, setTemplateDescription] = useState("");
     const [numberOfFood, setNumberOfFood] = useState("");
-    const [pickerValue, setPickerValue] = useState("offer");
+    const [pickerValue, setPickerValue] = useState("request");
 
     const [foodOfferList, setFoodOfferList] = useState([{id: 0, name:"", numberOfItems: 0}]);
 
@@ -84,17 +84,17 @@ const TemplateScreen = (props) => {
         if (selectedFormType === "offer") {
             return (
                 <>
-                    <View style={{ flexDirection: "row", justifyContent: "center", flex: 5 }}>
+                    <View style={{ flexDirection: "row", justifyContent: "center", flex: 5, marginBottom: 16 }}>
                         <Button contentStyle={{ height: 50 }}
                             value="Add"
-                            style={{ borderRadius: "100%", textAlign: "center", width: 100 }}
+                            style={{ borderRadius: 100, textAlign: "center" }}
                             mode="outlined" onPress={addFoodOfferItem}>
-                            Add
+                            Add another Food Item
                         </Button>
                     </View>
 
                     {
-                        foodOfferList.length > 0 && foodOfferList.map((item) => {
+                        foodOfferList.length > 0 && foodOfferList.map((item, k) => {
                             return (
                                 <View key={item.id} style={{ flexDirection: "row", flex: 5 }}>
                                     <View style={{ flex: 3 }}>
@@ -103,7 +103,7 @@ const TemplateScreen = (props) => {
                                             textInputBody={item.templateFoodTitle}
                                             onChangeHandler={handleFoodTitleChange} />
                                     </View>
-                                    <View style={{ flex: 1 }}>
+                                    <View style={{ paddingLeft: 10, flex: 2 }}>
                                         <TextInputTemplateComponent style={{ width: '80%' }}
                                             textInputCaption={"#"}
                                             textInputBody={item.numberOfFood}
@@ -111,10 +111,10 @@ const TemplateScreen = (props) => {
                                     </View>
                                     <View style={{ flex: 1, alignSelf: "center", alignContent: "center" }}>
                                         {
-                                            foodOfferList.length >= 1 ?
+                                            foodOfferList.length >= 1 && k > 0?
                                                 <Button contentStyle={{ height: 50 }}
                                                     icon="close"
-                                                    style={{ textAlign: "center", width: 20, borderRadius:"100%" }}
+                                                    style={{ textAlign: "center", borderRadius: 100, marginLeft: 3 }}
                                                     mode="outlined" onPress={() => removeFoodOfferItem(item.id)}>
                                                 </Button>
                                                 :
@@ -132,7 +132,7 @@ const TemplateScreen = (props) => {
                 </>
             );
         }
-        else
+        else if (selectedFormType === 'request')
             return (
                 <>
                     <TextInputTemplateComponent textInputCaption={"Food name"} textInputBody={templateFoodTitle} onChangeHandler={handleFoodTitleChange} />

@@ -30,7 +30,7 @@ const InputSelector = ({ handler }) => {
                     <Button
                         mode={!isOffer ? "contained" : "outlined"}
                         // style={{width: 100}}
-                        onPress={() => changePicker("buy")}>
+                        onPress={() => changePicker("request")}>
                             Request
                     </Button>
                 </View>
