@@ -29,6 +29,7 @@ const Post = ({ postData }) => (
         <Card.Content>
             <Title>{ (postData.type || 'requesting').toUpperCase()} : { postData.title || 'Untitled Listing' }</Title>
             <Paragraph>{ postData.description || 'No additional information given...' }</Paragraph>
+            <Paragraph>{ postData.coords ? postData.coords.latitude + ' , ' + postData.coords.longitude : '' }</Paragraph>
         </Card.Content>
         <Card.Actions>
             <Button>Message</Button>
