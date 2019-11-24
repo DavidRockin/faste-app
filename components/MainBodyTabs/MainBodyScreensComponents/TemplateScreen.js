@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, Keyboard, TouchableWithoutFeedback, Text, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import ButtonComponent from './ButtonComponent';
@@ -44,6 +44,12 @@ const TemplateScreen = () => {
             title: templateFoodTitle,
             description: templateDescription,
             food: foodOfferList
+        })
+        .then(resp => {
+            Alert.alert(`Success`, `we need to automatically change to this ad for u`)
+        })
+        .catch(err => {
+            Alert.alert(`Error`, err.statusText || err.toString())
         })
     }
 
