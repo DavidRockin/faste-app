@@ -68,9 +68,9 @@ const LoginScreen = ({ callback, switchScreens }) => {
             </View>
             <View style={{ padding: 48, justifyContent: 'center', alignItems: 'center' }}>
                 <TextInput value={email} style={{ width: '100%', marginBottom: 20 }} placeholder='email address' onChangeText={setEmail} />
-                <TextInput value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={setPassword} />
-                <Button onPress={doLogin} style={UiStyles.uiButton}>Sign in</Button>
-                <Button onPress={callback} style={UiStyles.uiButtonAlt}>Register an Account</Button>
+                <TextInput secureTextEntry={true} value={password} style={{ width: '100%', marginBottom: 25 }} placeholder='password' onChangeText={setPassword} />
+                <Button color='#fff' onPress={doLogin} style={UiStyles.uiButton}>Sign in</Button>
+                <Button color='#333' onPress={callback} style={UiStyles.uiButtonAlt}>Register an Account</Button>
             </View>
         </View>
     )
