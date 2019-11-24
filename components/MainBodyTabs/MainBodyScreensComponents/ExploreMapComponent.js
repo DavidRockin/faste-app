@@ -35,8 +35,7 @@ const ExploreMapComponent = ({ latitude, longitude }) => {
                         longitude: longitude
                     }}
                     pinColor='blue'
-                    title={"title"}
-                    description={"description"}
+                    title={"Current Location"}
                 />
                 {
                     posts.map((post, k) => {
