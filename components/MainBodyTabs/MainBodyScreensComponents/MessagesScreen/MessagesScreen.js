@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, RefreshControl } from 'react-native';
 import Conversation from './Conversation/Conversation';
 import axios from 'axios';
 import config from '../../../../config/app';
 import Network from '../../../../helpers/Network';
+
+function wait(timeout) {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
 
 const MessagesScreen = (props) => {
 
     const [conversations, setConversations] = useState([]);
     const [userIdToName, setUserIdToName] = useState({});
     const [currentUserId, setCurrentUserId] = useState('');
+    const [refreshing, setRefreshing] = React.useState(false);
 
     useEffect(() => {
         getUserConversations();
@@ -25,6 +32,9 @@ const MessagesScreen = (props) => {
                     throw new Error('Invalid login request, please try again')
                 }
                 setupConversations(userId, data.messages);
+                
+                // Artificial loading time
+                wait(1000).then(() => setRefreshing(false));
             }).catch(err => {
                 console.error(err)
             });    
@@ -92,11 +102,20 @@ const MessagesScreen = (props) => {
         )
     }
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        getUserConversations();
+      }, [refreshing]);
+
     return (
         <View>
-            {/* <ScrollView> */}
+            <ScrollView
+                //contentContainerStyle={{flex: 1}}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                  }>
                 {conversationComponentList}   
-            {/* </ScrollView> */}
+            </ScrollView>
         </View>
     );
 }
