@@ -58,7 +58,7 @@ const SettingsScreen = () => {
                 </View>
                 <View style={{ flex: 1, width: '100%' }}>
                     <Text style={{ fontSize: 18, padding: 8 }}>🔒 Password</Text>
-                    <TextInput value={password} onChangeText={setPassword} />
+                    <TextInput secureTextEntry={true} value={password} onChangeText={setPassword} />
                 </View>
                 <View style={{ flex: 1, width: '100%' }}>
                     <Text style={{ fontSize: 18, padding: 8 }}>📞 Your Phone Number</Text>
