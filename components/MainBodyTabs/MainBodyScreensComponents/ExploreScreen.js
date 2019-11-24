@@ -6,7 +6,7 @@ import Network from '../../../helpers/Network'
 const ExploreScreen = () => {
 
     async function t() {
-        Alert.alert(`kkk`, await Network.getUserId())
+        //Alert.alert(`kkk`, await Network.getUserId())
     }
     
     t()

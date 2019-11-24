@@ -20,7 +20,6 @@ const LoginScreen = ({ callback, switchScreens }) => {
             if (data.error) {
                 throw new Error('Invalid login request, please try again')
             }
-            console.log(data)
             Network.token = data.token
             callback()
         })

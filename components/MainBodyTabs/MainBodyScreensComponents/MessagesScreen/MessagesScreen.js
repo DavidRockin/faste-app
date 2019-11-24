@@ -1,60 +1,102 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView } from 'react-native';
 import Conversation from './Conversation/Conversation';
+import axios from 'axios';
+import config from '../../../../config/app';
+import Network from '../../../../helpers/Network';
 
-const MessagesScreen = () => {
+const MessagesScreen = (props) => {
 
-    const [conversations, setConversations] = useState([
-        {
-            id: 'fdjaslkjf',
-            name: 'George',
-            lastMessage: 'Stop texting me',
-        },
-        {
-            id: 'fdsklfhajk',
-            name: 'Sarah',
-            lastMessage: 'Stop texting me',    
-        },
-        {
-            id: 'oioughj',
-            name: 'Philip',
-            lastMessage: 'Stop texting me',
-        }
-    ]);
+    const [conversations, setConversations] = useState([]);
+    const [userIdToName, setUserIdToName] = useState({});
+    const [currentUserId, setCurrentUserId] = useState('');
+
+    useEffect(() => {
+        getUserConversations();
+    }, [props.navigation]);
 
     const getUserConversations = () => {
-        // get id
-        // axios get messages
-        // loop through messages and put them into object where keys are receivers
+        let userId = '';
+        Network.getUserData()
+            .then((user)=>{ userId = user._id; return user._id; })
+            .then((userId) => {return axios.get(config.endpoint + `/api/users/`+ userId + '/messages')})
+            .then(({data}) => {
+                if (data.error) {
+                    throw new Error('Invalid login request, please try again')
+                }
+                setupConversations(userId, data.messages);
+            }).catch(err => {
+                console.error(err)
+            });    
     }
 
-    const openChatScreen = () => {
+    const setupConversations = (currentUserId, messages) => {
+        const convoObject = {};
+        setCurrentUserId(currentUserId);
+        for(const message of messages){
+            // Set the id of the other user involved in conversation
+            let otherUserId = '';
+            let otherUserName = '';
+            if(message.senderId !== currentUserId){
+                otherUserId = message.senderId;
+                otherUserName = message.senderName;
+            }else if(message.receiverId !== currentUserId){
+                otherUserId = message.receiverId;
+                otherUserName = message.receiverName;
+            }
+            setUserIdToName({...userIdToName, [otherUserId]: otherUserName});
+            
+            // Add message to convo object
+            if(otherUserId in convoObject){
+                convoObject[otherUserId].push(message);
+            }else{
+                convoObject[otherUserId] = [message];
+            }
+        }
+        setConversations(convoObject); 
+    }
+
+    const openChatScreen = (key) => {
         // get conversation and pass it to chat screen
+        props.navigation.navigate('Chat', {
+            messages: conversations[key],
+            otherUserId: key,
+            currentUserId: currentUserId,
+            getUserConversations: getUserConversations,
+        });
     }
 
     const getShortForm = (name) => {
-        return name.substring(0,2).toUpperCase();
+        if(name){
+            return name.substring(0,2).toUpperCase();
+        }else{
+            return 'DE';
+        }
+        
+    }
+
+    // TODO Sort by date!!!
+    const getLastMessage = (messages) => {
+        return messages[messages.length-1].content;
     }
 
     const conversationComponentList = [];
-    for(let i = 0; i < conversations.length; i++){
-        const name = conversations[i].name;
-        const shortForm = getShortForm(name);
+    for(const key of Object.keys(conversations)){
         conversationComponentList.push(
             <Conversation 
-                key={conversations[i].id}
-                name={name} 
-                lastMessage={conversations[i].lastMessage} 
-                shortForm={shortForm}
-                openChatScreen={()=> openChatScreen(conversations[i].id)}/>
+                key={key}
+                name={userIdToName[key]} 
+                lastMessage={getLastMessage(conversations[key])} 
+                shortForm={getShortForm(userIdToName[key])}
+                openChatScreen={()=> openChatScreen(key)}/>
         )
     }
 
     return (
-        <View style={{ }}>
-            <ScrollView>
+        <View>
+            {/* <ScrollView> */}
                 {conversationComponentList}   
-            </ScrollView>
+            {/* </ScrollView> */}
         </View>
     );
 }
