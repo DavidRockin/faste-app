@@ -3,17 +3,18 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     navbarContainer: {
-        flex: 1,
+        flex: 0.5,
         alignItems: "flex-start",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         alignContent: "center",
         backgroundColor: '#1a78cf'
     },
     navbarCaption: {
+        marginBottom: 10,
         textAlign: "center",
         alignSelf: "center",
         color: 'white',
-        fontSize: 40
+        fontSize: 20
     }
 });
 
