@@ -6,6 +6,7 @@ import axios from 'axios';
 import config from '../../../../config/app';
 import store from '../../../../helpers/store';
 import Network from '../../../../helpers/Network';
+import { ActivityIndicator } from 'react-native-paper';
 
 function wait(timeout) {
     return new Promise(resolve => {
@@ -19,6 +20,7 @@ const MessagesScreen = (props) => {
     const [userIdToName, setUserIdToName] = useState({});
     const [currentUserId, setCurrentUserId] = useState('');
     const [refreshing, setRefreshing] = React.useState(false);
+    const [ isLoading, setLoading] = useState(true)
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -60,9 +62,12 @@ const MessagesScreen = (props) => {
                     throw new Error('Invalid login request, please try again')
                 }
                 setupConversations(userId, data.messages);
-                
+
                 // Artificial loading time
-                wait(1000).then(() => setRefreshing(false));
+                wait(1000).then(() => {
+                    setRefreshing(false)
+                    setLoading(false)
+                });
             }).catch(err => {
                 console.error(err)
             });    
@@ -148,15 +153,18 @@ const MessagesScreen = (props) => {
       }, [refreshing]);
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
+            { isLoading ? <ActivityIndicator style={{ marginTop: 60 }} size='large' /> :
+
             <ScrollView
-                //contentContainerStyle={{flex: 1}}
+                style={{flex: 1}}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                   }>
                 {conversationComponentList}
                 {conversationComponentList.length === 0 && <EmptyConversation/>}
             </ScrollView>
+            }
         </View>
     );
 }
