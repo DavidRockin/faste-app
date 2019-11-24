@@ -1,20 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-
-import Network from '../../../helpers/Network'
 
 const ExploreScreen = () => {
 
-    async function t() {
-        Alert.alert(`kkk`, await Network.getUserId())
+    const [geolocationCustom, setGeolocation] = useState({
+        ready: false,
+        where: { lat: null, lng: null },
+        error: null
+    });
+
+    useEffect(() => {
+        let geoOptions = {
+            // enableHighAccuracy: true,
+            timeOut: 20000,
+            maximumAge: 60 * 60 * 24
+        };
+        setGeolocation({ ready: false, error: null });
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions)
+    }, []);
+
+    geoSuccess = (position) => {
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
+        setGeolocation({
+            ready: true,
+            where: { lat: position.coords.latitude, lng: position.coords.longitude }
+        })
     }
-    
-    t()
-    
+    geoFailure = (err) => {
+        setGeolocation({ error: err.message });
+    }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Explore Screen!</Text>
+            {!geolocationCustom.ready && (
+                <Text>Using Geolocation in React Native.</Text>
+            )}
+            {geolocationCustom.error && (
+                <Text>{geolocationCustom.error}</Text>
+            )}
+            {
+                geolocationCustom.ready && (
+                    <Text>Longitude: {geolocationCustom.where.lng}, Latitude: {geolocationCustom.where.lat}</Text>
+                )
+            }
         </View>
     );
 }
