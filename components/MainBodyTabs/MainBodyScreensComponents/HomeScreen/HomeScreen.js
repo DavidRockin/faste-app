@@ -16,7 +16,7 @@ function wait(timeout) {
     });
 }
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
     const [ posts, setPosts ] = useState([]);
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -37,6 +37,13 @@ const HomeScreen = () => {
         return () => isSubscribed = false;
     }, [refreshing]);
 
+    const newMessage = (adOwnerId) => {
+        props.navigation.navigate('Messages', {
+            otherUserId: 'teststs',
+            action: 'createMessage'
+        });
+    }
+
     useEffect(() => {
         let isSubscribed = true;
         Network.getAdListings()
@@ -56,12 +63,9 @@ const HomeScreen = () => {
     return (
         <View style={styles.mainMenuContainer}>
             <ScrollView
-                refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                  }>
-
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     {posts.map((v, k) => {
-                        return <Post postData={v} key={k} />
+                        return <Post postData={v} key={k} newMessage={newMessage} />
                     })
                 }
             </ScrollView>

@@ -3,10 +3,12 @@ import { Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-
+import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './MainBodyTabs/MainBodyScreensComponents/HomeScreen/HomeScreen';
 import SettingsScreen from './MainBodyTabs/MainBodyScreensComponents/SettingsScreen';
-import MessagesContainer from './MainBodyTabs/MainBodyScreensComponents/MessagesScreen/MessagesContainer';
+//import MessagesContainer from './MainBodyTabs/MainBodyScreensComponents/MessagesScreen/MessagesContainer';
+import MessagesScreen from './MainBodyTabs/MainBodyScreensComponents/MessagesScreen/MessagesScreen';
+import ChatScreen from './MainBodyTabs/MainBodyScreensComponents/MessagesScreen/ChatScreen/ChatScreen';
 import ExploreScreen from './MainBodyTabs/MainBodyScreensComponents/ExploreScreen';
 import TemplateScreen from './MainBodyTabs/MainBodyScreensComponents/TemplateScreen';
 
@@ -31,7 +33,25 @@ const BottomMenuNavigator = createMaterialBottomTabNavigator({
         }
     },
     Messages: {
-        screen: MessagesContainer,
+        screen: createStackNavigator(
+            {
+                Messages: {
+                    screen: MessagesScreen,
+                    navigationOptions: {
+                        header: null,
+                    }
+                },
+                Chat: {
+                    screen: ChatScreen,
+                    navigationOptions: {
+                        title: 'Message',
+                    }
+                }
+            },
+            {
+                initialRouteName: 'Messages'
+            }   
+        ),
         navigationOptions: {
             tabBarLabel: "Messages",
             tabBarIcon: ({ tintColor }) => (

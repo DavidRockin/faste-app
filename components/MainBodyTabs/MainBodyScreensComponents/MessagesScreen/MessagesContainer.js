@@ -7,7 +7,11 @@ import { createAppContainer } from 'react-navigation';
 const MessagesStackNavigator = createStackNavigator(
     {
         Messages: {
-            screen: MessagesScreen,
+            screen: (props) => {
+                //console.log(props);
+                //console.log(props.navigation.getParam('action'))
+                return <MessagesScreen {...props} />
+            },
             navigationOptions: {
                 header: null,
             }
@@ -15,7 +19,7 @@ const MessagesStackNavigator = createStackNavigator(
         Chat: {
             screen: ChatScreen,
             navigationOptions: {
-                title: 'Chat',
+                title: 'Message',
             }
         }
     },

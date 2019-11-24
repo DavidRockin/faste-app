@@ -6,7 +6,7 @@ import moment from 'moment'
 import getDistance from 'geolib/es/getDistance'
 import store from '../../../../helpers/store';
 
-const Post = ({ postData }) => {
+const Post = ({ postData, newMessage }) => {
     
     const calculatePostedAgo = (dateCreated) => {
         const dateRightNow = Date.now();
@@ -34,7 +34,7 @@ const Post = ({ postData }) => {
                     </View>
                     <View style={{ flex: 1, alignItems: 'flex-end', paddingTop: 8 }}>
                         <Card.Actions>
-                            <Button>Message</Button>
+                            <Button onPress={()=> {newMessage(postData.ownerId)}}>Message</Button>
                         </Card.Actions>
                     </View>
                 </View>

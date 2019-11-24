@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, RefreshControl } from 'react-native';
+import { View, ScrollView, RefreshControl, Text } from 'react-native';
 import Conversation from './Conversation/Conversation';
+import EmptyConversation from './Conversation/EmptyConversation';
 import axios from 'axios';
 import config from '../../../../config/app';
 import Network from '../../../../helpers/Network';
@@ -13,7 +14,7 @@ function wait(timeout) {
 
 const MessagesScreen = (props) => {
 
-    const [conversations, setConversations] = useState([]);
+    const [conversations, setConversations] = useState({});
     const [userIdToName, setUserIdToName] = useState({});
     const [currentUserId, setCurrentUserId] = useState('');
     const [refreshing, setRefreshing] = React.useState(false);
@@ -22,12 +23,19 @@ const MessagesScreen = (props) => {
         getUserConversations();
     }, [props.navigation]);
 
+    useEffect(() => {
+        //console.log(conversations);
+    }, [conversations])
+
     const getUserConversations = () => {
         let userId = '';
-        Network.getUserData()
-            .then((user)=>{ userId = user._id; return user._id; })
-            .then((userId) => {return axios.get(config.endpoint + `/api/users/`+ userId + '/messages')})
-            .then(({data}) => {
+        Network.getUserData().then((user)=>{ 
+                userId = user._id; 
+                setCurrentUserId(userId); 
+                return user._id; 
+            }).then((userId) => {
+                return axios.get(config.endpoint + `/api/users/`+ userId + '/messages')
+            }).then(({data}) => {
                 if (data.error) {
                     throw new Error('Invalid login request, please try again')
                 }
@@ -42,7 +50,6 @@ const MessagesScreen = (props) => {
 
     const setupConversations = (currentUserId, messages) => {
         const convoObject = {};
-        setCurrentUserId(currentUserId);
         for(const message of messages){
             // Set the id of the other user involved in conversation
             let otherUserId = '';
@@ -63,6 +70,12 @@ const MessagesScreen = (props) => {
                 convoObject[otherUserId] = [message];
             }
         }
+
+        //console.log(props.navigation.getParam('action'));
+        // if(!props.navigation.getParam('otherUserId') in convoObject){
+        //     convoObject[otherUserId] = [];
+        // }
+
         setConversations(convoObject); 
     }
 
@@ -114,7 +127,8 @@ const MessagesScreen = (props) => {
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                   }>
-                {conversationComponentList}   
+                {conversationComponentList}
+                {conversationComponentList.length === 0 && <EmptyConversation/>}
             </ScrollView>
         </View>
     );

@@ -68,4 +68,4 @@ const MainAppContainer = ({ store }) => {
   );
 }
 
-export default MainAppContainer;4
+export default MainAppContainer;
