@@ -43,21 +43,25 @@ const SettingsScreen = () => {
     }, [])
 
     return (
-        <View style={{ flex: 3, padding: 20, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ flex: 2 }}>
+        <View style={{ flex: 4, padding: 20, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ flex: 1 }}>
                 <Text>photo will be here :)</Text>
             </View>
-            <View style={{ flex: 5, width: '100%' }}>
-                <View style={{ flex: 1, backgroundColor: '#f00', width: '100%' }}>
+            <View style={{ flex: 7, width: '100%' }}>
+                <View style={{ flex: 1, width: '100%' }}>
+                    <Text style={{ fontSize: 18, padding: 8 }}>📧 Your email</Text>
                     <TextInput value={email} onChangeText={setEmail} />
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#f00', width: '100%' }}>
+                <View style={{ flex: 1, width: '100%' }}>
+                    <Text style={{ fontSize: 18, padding: 8 }}>👤 Your Name</Text>
                     <TextInput value={name} onChangeText={setName} />
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#f00', width: '100%' }}>
+                <View style={{ flex: 1, width: '100%' }}>
+                    <Text style={{ fontSize: 18, padding: 8 }}>🔒 Password</Text>
                     <TextInput value={password} onChangeText={setPassword} />
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#f00', width: '100%' }}>
+                <View style={{ flex: 1, width: '100%' }}>
+                    <Text style={{ fontSize: 18, padding: 8 }}>📞 Your Phone Number</Text>
                     <TextInput value={telephone} onChangeText={setTelephone} />
                 </View>
                 <View style={{ flex: 1, width: '100%' }}>
@@ -66,7 +70,7 @@ const SettingsScreen = () => {
                     </Button>
                 </View>
             </View>
-            <View style={{ flex: 2 }}>
+            <View style={{ flex: 1, height: 90 }}>
                 <Button onPress={Network.signout}>
                     <Text>Sign Out</Text>
                 </Button>
