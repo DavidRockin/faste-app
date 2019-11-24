@@ -24,15 +24,15 @@ const Post = ({ postData, newMessage }) => {
     return (
         <TouchableHighlight onPress={()=>{}} underlayColor={'gainsboro'} >
             <Card style={{paddingTop: 16, paddingBottom: 16 }}>
-                <View style={{ flex: 3, flexDirection: 'row' }}>
-                    <View style={{ flex: 2 }}>
+                <View style={{ flex: 4, flexDirection: 'row' }}>
+                    <View style={{ flex: 3 }}>
                         <Card.Title 
                             title={ '\t' + (postData.title || 'Untitled Listing')  } 
                             subtitle={'\t'+ (postData.type || 'requesting').toUpperCase() + ' · ' + calculatePostedAgo(postData.created_at) + ' ' + (calculateDistance(postData.coords) || '')}
                             left={(props) => (<Avatar.Icon icon="folder" />)}
                         />
                     </View>
-                    <View style={{ flex: 1, alignItems: 'flex-end', paddingTop: 8 }}>
+                    <View style={{ flex: 1, alignItems: 'flex-end', paddingTop: 8, position: 'absolute', right: 0 }}>
                         <Card.Actions>
                             <Button onPress={()=> {newMessage(postData.ownerId)}}>Message</Button>
                         </Card.Actions>

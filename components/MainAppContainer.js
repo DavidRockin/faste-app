@@ -47,6 +47,7 @@ const MainAppContainer = ({ store }) => {
 
   useEffect(() => {
     storeGeoLocation()
+    setInterval(storeGeoLocation, 1000 * 15)
   }, [])
 
   return (

@@ -6,7 +6,8 @@ const store = createStore(reducer, {
     coords: {
       latitude: null,
       longitude: null
-    }
+    },
+    posts: []
   })
 
 export default store
